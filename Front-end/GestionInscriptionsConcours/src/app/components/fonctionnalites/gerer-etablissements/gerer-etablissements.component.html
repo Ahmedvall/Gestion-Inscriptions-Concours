@@ -1,0 +1,38 @@
+<app-header></app-header>
+
+<div class="container" style="margin-top: 15px; margin-bottom: 25px;">
+    <h4>Gerer les Etablissements</h4>
+</div>
+
+<app-ajout-maj-etablissement
+    (ajoutEffectuer) = "ajoutEffEvent($event)"
+    (annulerEffectuer) = "annulerEffEvent($event)"
+    [etablissement] = "etablissement"
+    [etablissementEdited] = "etablissementEdited"></app-ajout-maj-etablissement>
+
+    <div class="container">
+        <table class="table" *ngIf="etablissements.length > 0">
+            <thead>
+              <tr>
+                <th style="width: 40%;" >Nom</th>
+                <th style="width: 40%;" >Ville</th>
+                <th style="width: 5%;" >Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let etablissement of etablissements | paginate : {itemsPerPage:7,currentPage:p}; let i = index">
+                <td style="width: 40%;">{{etablissement.nom}}</td>
+                <td style="width: 40%;">{{etablissement.ville.nom}}</td>
+                <td style="width: 5%;">
+                  <a class="float-left" (click)="editerEtab(etablissement)"><i title="Editer" style="cursor: pointer;" class="fas fa-edit"></i></a>  
+                  <a class="float-right" (click)="supprimerEtab(etablissement)"> <i title="Supprimer" style="cursor: pointer;" class="fas fa-trash"></i></a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+    
+          <div class="container" *ngIf="etablissements.length == 0">
+              <h5 style="text-align: center;">Pas d'etablissement enregisterer</h5>
+          </div>
+          <pagination-controls *ngIf="etablissements.length > 7"  (pageChange)="p=$event"></pagination-controls>
+    </div>

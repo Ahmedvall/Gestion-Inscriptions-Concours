@@ -1,0 +1,91 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Inscriptions & Concours</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto" >
+        <li class="nav-item active" *ngIf="userAuthentifier">
+          <a class="nav-link" routerLink="/accueil">Accueil <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item dropdown active" *ngIf="userAuthentifier && userConnected.role.nomRole=='ADMIN'">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Gerer
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" routerLink="/etablissements">Etablissements</a>
+            <a class="dropdown-item" routerLink="/villes">Villes</a>
+            <a class="dropdown-item" routerLink="/specialites">Specialités</a>
+            <a class="dropdown-item" routerLink="/filieres">Filieres</a>
+            <!-- <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">Something else here</a> -->
+          </div>
+        </li>
+
+        <li class="nav-item dropdown active" *ngIf="userAuthentifier">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Gerer Testes
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" routerLink="/matieres">Matieres</a>
+            <a class="dropdown-item" routerLink="/niveaux">Niveaux</a>
+            <a class="dropdown-item" routerLink="/criteres">Criteres</a>
+          </div>
+        </li>
+
+        <li class="nav-item dropdown active" *ngIf="userAuthentifier && userConnected.role.nomRole=='ADMIN'" >
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Données
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" routerLink="/import">Importer</a>
+            <a class="dropdown-item" style="cursor: pointer;" (click)="getDBExcelFile()">Exporter</a>
+          </div>
+        </li>
+
+        <li class="nav-item dropdown active" *ngIf="userAuthentifier && userConnected.role.nomRole=='ADMIN'">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Utilisateurs
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" routerLink="/utilisateurs">Consulter tous</a>
+            <a class="dropdown-item" routerLink="/ajouterUtilisateur">Ajouter compte</a>
+          </div>
+        </li>
+
+        <li class="nav-item active" *ngIf="userAuthentifier">
+          <a class="nav-link" routerLink="/selection">Selections</a>
+        </li>
+
+       <!--  <li class="nav-item dropdown active">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Gerer Evaluations
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" routerLink="/matieres">Matieres</a>
+            <a class="dropdown-item" routerLink="/niveaux">Niveaux</a>
+            <a class="dropdown-item" routerLink="/criteres">Criteres</a>
+          </div>
+        </li> -->
+
+        <li class="nav-item active" *ngIf="userAuthentifier">
+          <a class="nav-link" routerLink="/examens">Evaluation</a>
+        </li>
+        
+        
+      </ul>
+      
+      <form class="form-inline my-2 my-lg-0" style="padding-right: 30px;">
+        <button *ngIf="!userAuthentifier" routerLink="/login" class="btn btn-outline-secondary mr-sm-2 my-2 my-sm-0" type="submit">Connexion</button>
+        <div class="nav-item dropdown active"  *ngIf="userAuthentifier">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fa fa-user" aria-hidden="true"></i> {{userConnected.prenom}}
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" style="cursor: pointer;" (click)="deconnecter()">Déconnexion</a>
+          </div>
+        </div>
+      </form>
+    </div>
+  </nav>

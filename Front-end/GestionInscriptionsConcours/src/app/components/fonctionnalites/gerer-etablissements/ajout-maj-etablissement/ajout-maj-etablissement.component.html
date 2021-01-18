@@ -1,0 +1,29 @@
+<div class="container">
+    <form [formGroup]="etablissementForm" (ngSubmit)="enregistereEtab()">
+        <div class="form-row">
+            <div class="form-group col-md-3">
+              <label for="inputEmail4">Nom Etablissement: </label>
+              <input type="text" class="form-control"  formControlName="nom"
+              [ngClass]="{ 'is-invalid': submitted && etablissementFormControls.nom.errors }"> 
+                          <div *ngIf="submitted && etablissementFormControls.nom.errors" class="invalid-feedback">
+                              <div *ngIf="etablissementFormControls.nom.errors.required">champ obligatoire</div>
+                          </div>
+            </div>
+            
+
+            <div class="form-group col-md-2">
+                <label for="inputEmail4" >&nbsp;&nbsp;</label>
+                <button *ngIf="!etablissementEdited" (click)="submitted = true;" type="submit" class="btn btn-primary form-control">Ajouter</button>
+                <table *ngIf="etablissementEdited">
+                    <tr>
+                        <td><button (click)="annuler = true;" type="submit" class="btn btn-primary float-left">Annuler</button></td>
+                        <td>&nbsp;&nbsp;</td>
+                        <td><button (click)="submitted = true;" type="submit" class="btn btn-primary float-right">Modifier</button></td>
+                    </tr>     
+                </table>
+                
+            </div>
+            
+          </div>
+    </form> 
+</div>

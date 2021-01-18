@@ -1,0 +1,66 @@
+<app-header></app-header>
+<br>
+
+<div class="row" style="width: 100%;">
+  <div class="col ">
+    <button *ngIf="refresh == true" class="btn btn-primmary float-right" (click)="refreshCandd()">  <i class="fas fa-sync" style="margin-right: 10px;"></i>Actualiser </button>
+    <button *ngIf="refresh == false"  class="btn btn-primmary float-right" (click)="refreshCandd()">  <i class="fas fa-spinner fa-spin" style="margin-right: 10px;" title="En cours"></i> Actualiser </button>
+    <button *ngIf="!afficherFilter" class="btn btn-primary float-right" (click)="afficherFilter = true"> Afficher filtre de recherche </button>
+    <button *ngIf="afficherFilter" class="btn btn-primary float-right" (click)="afficherFilter = false"> Cacher filtre de recherche </button>
+  </div>
+</div>
+
+<div class="row" style="width: 100%;">
+    <div class="col-md-5" *ngIf="afficherFilter">
+        <app-filter-recherche (candidatsSelectionner)="candidatSelectionnerEvent($event)"></app-filter-recherche>
+    </div>
+    <div [ngClass]="{'col-md-7': afficherFilter === true, 'col-md-12 d-flex justify-content-center': afficherFilter === false}">
+        
+      <div style="margin-left: 10px;">
+        <div class="form-inline d-flex justify-content-center md-form form-sm mt-0 " style="width: 30% !important;">
+          <i class="fas fa-search" aria-hidden="true"></i>
+          <input class="form-control form-control-sm ml-3 w-75" type = "text" [(ngModel)]= "searchTxt" placeholder="Chercher par mot clé"  /> 
+        </div>
+        <table class="table table-striped" *ngIf="candidats.length > 0" style="table-layout: fixed; word-wrap: break-word; width: 100%;">
+          <thead style="width: 100%;">
+            <tr>
+              <th style="width: 30%;" scope="col">Nom</th>
+              <th style="width: 20%;" scope="col">Prenom</th>
+              <th style="width: 20%;" scope="col">numTel</th>
+              <th *ngIf="!afficherFilter" style="width: 20%;" scope="col">dateNaissance</th>
+              <th *ngIf="!afficherFilter" style="width: 10%;" scope="col">CNE</th>
+              <th style="width: 10%;" scope="col">Actions</th>
+            </tr>
+          </thead>
+          
+          <tbody style="width: 100%;">
+              <!-- <div style="width: 100%; height: 600px; overflow-y: auto; overflow-x: hidden;"> -->
+              <tr *ngFor="let candidat of candidats |filter: searchTxt | paginate : {itemsPerPage:9,currentPage:p}; let i = index " >
+                <td style="width: 30%;" >{{candidat.nom}}</td>
+                <td style="width: 20%;">{{candidat.prenom}}</td>
+                <td style="width: 20%;">{{candidat.numTel}}</td>
+                <td *ngIf="!afficherFilter" style="width: 20%;">{{candidat.dateNaissance | date: 'dd/MM/yyyy'}}</td>
+                <td *ngIf="!afficherFilter" style="width: 10%;" >{{candidat.cne}}</td>
+                <td style="width: 10%;">
+                  <a class="float-left" (click)="editerCandidat(candidat)"><i title="Editer" style="cursor: pointer;" class="fas fa-edit"></i></a>  
+                </td>
+              </tr>
+           <!--  </div> -->
+          </tbody>
+          
+        </table>
+  
+        <div class="container" *ngIf="candidats.length == 0">
+            <h5 style="text-align: center;">Pas de filiere enregisterer</h5>
+        </div>
+
+        <pagination-controls *ngIf="candidats.length > 8"  (pageChange)="p=$event"></pagination-controls>
+      </div>
+     
+    </div>
+    
+</div>
+
+
+
+<!-- <app-detail></app-detail> -->

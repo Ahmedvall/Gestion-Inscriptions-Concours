@@ -1,0 +1,72 @@
+
+<div style="color: red;"
+     *ngIf="!candidat.evaluation || candidat.evaluation.testesEcris.length <= 0"> 
+    Teste Ecrit non Enregistrer ..
+</div>
+
+<form [formGroup]="ecritForm" (ngSubmit)="onSubmit()">
+    <table class="table" style="table-layout: fixed; word-wrap: break-word;">
+        <thead>
+            <tr style="width: 100%;">
+                <th style="width: 30%;">Criteres</th>
+                <th style="width: 30%;" *ngIf="!candidat.evaluation || candidat.evaluation.testesEcris.length <= 0"> 
+                    <div class="row" >
+                        <div class="col-md-4">
+                            <button type="submit" (click)="submitted = true;" class="btn btn-secondary">Enregistrer</button>
+                        </div>
+                    </div>
+                </th>
+                <th style="width: 30%;" *ngIf="candidat.evaluation && candidat.evaluation.testesEcris.length > 0"> 
+                    <div class="row">
+                        <div class="col-md-4" >
+                            <button type="submit" (click)="majForm = true; submitted = true;" class="btn btn-secondary">Modifier</button>
+                        </div>
+                    </div>
+                </th>
+                
+                
+            </tr>
+        </thead>
+        <tbody style="width: 100%" formArrayName="listNbFauxVraies"
+        >
+            <tr *ngFor="let matiere of getlistNbFauxVraiesCtrl(ecritForm); let i= index"
+             style="width: 100%;"
+            [formGroupName]="i">
+                <td> {{matiere.controls.nomMatiere.value}} </td>
+                <td>
+                    <div class="row">
+                        <div class="form-group col">
+                            <label for="inputEmail4">nbr Vrai :</label>
+                            <input  type="text" class="form-control" 
+                            formControlName="nbVrai"
+                            [ngClass]="{ 'is-invalid': submitted && matiere.controls.nbVrai.errors }"> 
+                            <div *ngIf="submitted && matiere.controls.nbVrai.errors" class="invalid-feedback">
+                                <div *ngIf="matiere.controls.nbVrai.errors.required">champ obligatoire</div>
+                            </div>
+                                
+                        </div>
+                    </div>
+                    
+
+                    <div class="row">
+                        <div class="form-group col">
+                            <label for="inputEmail4">nbr Faux :</label>
+                            <input  type="text" class="form-control" 
+                            formControlName="nbFaux"
+                            [ngClass]="{ 'is-invalid': submitted && matiere.controls.nbFaux.errors }"> 
+                            <div *ngIf="submitted && matiere.controls.nbFaux.errors" class="invalid-feedback">
+                                <div *ngIf="matiere.controls.nbFaux.errors.required">champ obligatoire</div>
+                            </div>
+                                
+                        </div>
+                    </div>
+
+                </td>
+                
+            </tr>
+            
+        </tbody>
+    </table>
+    
+    
+</form>

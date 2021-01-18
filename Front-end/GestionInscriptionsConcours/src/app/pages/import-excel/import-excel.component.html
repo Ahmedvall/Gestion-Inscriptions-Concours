@@ -1,0 +1,23 @@
+<app-header></app-header>
+
+<br><br>
+<div class="container" style="text-align: center;">
+    <div class="container" style="text-align: center; width: 40%;">
+        <label for="file" class="label-file">Importer un fichier Excel</label>
+        <input #excel style="display: none !important;" type="file" class="input-file" accept=".xlsx" (change)="getFile($event)" />
+
+        <button style="cursor: pointer;" 
+                                class="btn btn-secondary text-white btn-block"
+                                (click)="excel.click()"
+                                >Charger le fichier</button>
+
+        <div style="margin-top: 20px;" *ngIf="dataInProgress && !dataUploaded">
+            <h4 style="color: gray; text-align: center;">Chargement ......
+                <i class="fas fa-spinner fa-spin" title="En cours"></i></h4>
+        </div>
+        <div style="margin-top: 20px;" *ngIf="dataUploaded">
+            <h4 style="color: brown;">Info : <small>Les données ont bien été sauvegarder</small></h4>
+        </div>
+
+    </div>
+</div>

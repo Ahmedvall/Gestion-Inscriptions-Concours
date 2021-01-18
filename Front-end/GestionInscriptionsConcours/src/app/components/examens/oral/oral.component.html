@@ -1,0 +1,118 @@
+<br>
+<form [formGroup]="oralForm" (ngSubmit)="onSubmit()">
+    <table class="table" style="table-layout: fixed; word-wrap: break-word;">
+        <thead>
+            <tr>
+                <th style="width: 30%;">Criteres</th>
+                <th style="text-align: center;" *ngFor="let niveau of niveaux" >{{niveau.libelle}} <span>({{niveau.cout}})</span></th>
+            </tr>
+        </thead>
+        <tbody 
+        style="overflow-y: scroll !important;"
+        formArrayName="criteresList"
+        *ngFor="let critere of getCritereListCtrl(oralForm); let i = index">
+            <tr [formGroupName]="i">
+               
+                        <td>
+                            {{critere.controls.critereLibele.value}}
+                            <!-- <input type="text" style="width: 100%;" [readonly]="true" formControlName="critereLibele"> -->
+                         </td> 
+                        <td formArrayName="checkedList" 
+                        *ngFor="let line of getChechedListCtrl(critere); let j = index">
+                            <div [formGroupName]="j" style="text-align: center;"> 
+                                    <input class="form-check-input" type="checkbox" class="center"
+                                    [checked] ="isChecked(i,j)"
+                                    (change)="changeStatusCheckBox(i,j,$event)"
+                                    >
+
+                                    
+                            </div> 
+                        </td>
+                        
+                        <td style="width: 5px;">
+                            <div *ngIf="submitted && nothingChecked(i)" style="color: red;">obligatoire</div>
+                        </td>
+            </tr>
+
+        </tbody>
+        <tbody>
+            <tr >
+                <td style="font-weight: bold;">Total des points: </td>
+                <td style="text-align: center;" *ngFor="let niveau of niveaux; let ic = index">{{countChekedItem(ic, niveau.cout)}}</td>
+            </tr>
+        </tbody>
+        <tbody >
+            <tr >
+                <td style="font-weight: bold;">Note Globale: </td>
+                <td>
+                    <div class="row">
+                        <div class="form-group col">
+                            <label for="inputEmail4">Member 1 :</label>
+                            <input style="width: 100%;" type="number" class="form-control" 
+                            formControlName="noteMember1"
+                            [ngClass]="{ 'is-invalid': submitted && oralFormControls.noteMember1.errors }"> 
+                            <div *ngIf="submitted && oralFormControls.noteMember1.errors" class="invalid-feedback">
+                                <div *ngIf="oralFormControls.noteMember1.errors.required">champ obligatoire</div>
+                            </div>
+                                
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="row">
+                        <div class="form-group col">
+                            <label for="inputEmail4">Member 2 :</label>
+                            <input type="number" class="form-control" formControlName="noteMember2"
+                            [ngClass]="{ 'is-invalid': submitted && oralFormControls.noteMember2.errors }"> 
+                            <div *ngIf="submitted && oralFormControls.noteMember2.errors" class="invalid-feedback">
+                                <div *ngIf="oralFormControls.noteMember2.errors.required">champ obligatoire</div>
+                            </div>
+                                
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="row">
+                        <div class="form-group col">
+                            <label for="inputEmail4">Finale: (Moy) </label>
+                            <input type="text" class="form-control" readonly="true" [value]="getMoy(oralForm)">
+                                
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr >
+                <div class="form-group">
+                    <label for="exampleFormControlTextarea1">Observation: </label>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" formControlName="observation"
+                    [ngClass]="{ 'is-invalid': submitted && oralFormControls.observation.errors }"> 
+
+                    </textarea>
+                    <div *ngIf="submitted && oralFormControls.observation.errors" class="invalid-feedback">
+                        <div *ngIf="oralFormControls.observation.errors.required">champ obligatoire</div>
+                    </div>
+                  </div>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="row" *ngIf="!candidat.evaluation || !candidat.evaluation.test_oral">
+        <div class="col-md-7">
+            <button type="submit" (click)="fermerleTest()" class="btn btn-secondary">Fermer</button>
+            <button type="submit" style="margin-left: 50px;" (click)="submitted = true;" class="btn btn-success">Enregistrer</button>
+        </div>
+    </div>
+    <div class="row" *ngIf="candidat.evaluation && candidat.evaluation.test_oral">
+        <div class="col-md-4">
+            <button type="submit" (click)="fermerleTest()" class="btn btn-secondary">Fermer</button>
+            <button type="submit" style="margin-left: 50px;" (click)="majForm = true; submitted = true;" class="btn btn-success">Modifier</button>
+        </div>
+    </div>
+
+    <!-- <div class="row">
+        <div class="col-md-4">
+                <div style="color: red;" *ngIf="submittedForm && isNotValidForm()">Formulaire invalid</div>
+        </div>
+    </div> -->
+
+</form>

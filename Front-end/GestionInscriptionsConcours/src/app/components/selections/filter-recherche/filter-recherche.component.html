@@ -1,0 +1,154 @@
+<div class="accordion" id="accordionExample">
+    <div class="card">
+      <div class="card-header" id="headingOne">
+        <h5 class="mb-0">
+          <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+            Affichage du Filtre
+          </button>
+          
+          <button style="float: right; width: 30%;" class="btn btn-success"  (click)="onSubmit()">Chercher</button>
+        </h5>
+      </div>
+  
+      <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+        <div class="card-body" style="height: 480px; overflow-y: scroll; ">
+
+          <form  [formGroup]="filterForm">
+            <table class="table table-sm table-borderless mb-0" style=" table-layout: fixed; word-wrap: break-word;">
+              <!-- <thead>
+                  <tr style="width: 100%;">
+                      <th style="width: 30%;">Criteres</th>
+                     
+                  </tr>
+              </thead> -->
+              <tbody  formArrayName="diplomesList"
+              *ngFor="let filter of getFilterForm(filterForm); let i = index">
+                   <div [formGroupName]="i">
+                    <h2> {{filter.controls.typeDiplome.value | uppercase}} </h2>
+                    <hr>
+                    
+                     <div style="margin-left: 10px;">
+                      <h4>Specialités : </h4>
+                        <tr formArrayName="specialites"
+                            *ngFor="let spec of getSpecialitesForm(filter); let j = index">
+                          <div [formGroupName]="j">
+                              <input class="form-check-input" type="checkbox" class="center"
+                                      [checked] ="isCheckedSpecialite(i,j)"
+                                      (change)="changeStatusCheckBoxSpec(i,j,$event)"
+                                      > {{spec.controls.nomSpec.value}}
+                          </div>
+                        </tr>
+                     </div>
+                     <hr>
+
+
+                     
+                     <div style="margin-left: 10px;">
+                      <h4>Mentions : </h4>
+                        <tr formArrayName="mentions">
+                          <td *ngFor="let mention of getMentionsForm(filter); let k = index">
+                          <div [formGroupName]="k">
+                              <input class="form-check-input" type="checkbox" class="center"
+                              [checked] ="isCheckedMention(i,k)"
+                              (change)="changeStatusCheckBoxMention(i,k,$event)"
+                              > {{mention.controls.mention.value}}
+                          </div>
+                          </td>
+                        </tr>
+                    </div>
+
+
+                     <tr>
+                      <td>Ayant une Moyenne > :</td>
+                      <td> <input type="number" class="form-control" value="" style="width: 110px;" formControlName="moyenne"> </td>
+                    </tr>
+                   </div>
+              </tbody>
+              <br>
+              <h3 style="font-weight: bold;">
+                Filieres
+                <small class="text-muted">Ayant choisi :</small>
+              </h3>
+                
+              <hr>            
+              <tbody formArrayName="filieresList"
+              *ngFor="let filiere of getFiliereFilterForm(filterForm); let id = index">
+                <tr [formGroupName]="id">
+
+                  <input class="form-check-input" type="checkbox" class="center"
+                                      [checked] ="isCheckedFiliere(id)"
+                                      (change)="changeStatusCheckBoxFiliere(id,$event)"
+                                      > {{filiere.controls.nomFiliere.value}}
+                </tr>
+              </tbody>
+              <br>
+
+              <div class="row">
+
+                <div class="col-md-5">
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="1" (change)="saveRadioChecked($event.target.value)" checked>
+                    <label class="form-check-label" for="exampleRadios1">
+                      1er Choix
+                    </label>
+                  </div>
+                </div>
+
+                <div class="col-md-5">
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="2" (change)="saveRadioChecked($event.target.value)" >
+                    <label class="form-check-label" for="exampleRadios2">
+                      2éme Choix
+                    </label>
+                  </div>
+                </div>
+
+                
+                
+
+              </div>
+            </table>
+            <br><br>
+            
+          </form>
+            
+        </div>
+      </div>
+    </div>
+    
+    
+  </div>
+
+
+
+<!-- 
+  <div class="card">
+    <div class="card-header" id="headingTwo">
+      <h5 class="mb-0">
+        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+          Diplome LICENCE
+        </button>
+      </h5>
+    </div>
+    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+      <div class="card-body">
+        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+      </div>
+    </div>
+  </div>
+
+
+  <div class="card">
+    <div class="card-header" id="headingThree">
+      <h5 class="mb-0">
+        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+          Diplome MASTER
+        </button>
+      </h5>
+    </div>
+    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+      <div class="card-body">
+        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+      </div>
+    </div>
+  </div> -->

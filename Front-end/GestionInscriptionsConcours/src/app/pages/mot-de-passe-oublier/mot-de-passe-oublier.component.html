@@ -1,0 +1,62 @@
+<app-header></app-header>
+<div class="content" *ngIf="!emailCorrect">
+				<div class="container-fluid">
+					
+					<div class="row" style="margin:80px;background-color: #FFF;">
+						<div class="col-md-8 offset-md-2">
+							
+							<!-- Account Content -->
+							<div class="account-content">
+								<div class="row align-items-center justify-content-center">
+									<div class="col-md-7 col-lg-6 login-left">
+										
+									</div>
+									<div class="col-md-12 col-lg-6 login-right" *ngIf="!emailCorrect">
+										<div class="login-header">
+											<h3>Mot de passe oublié?</h3>
+											<p class="small text-muted">Entrer votre adresse Email</p>
+										</div>
+										
+										<!-- Forgot Password Form -->
+										<form [formGroup]="forgotPwdForm" (ngSubmit)="forgotPwd()">
+											<div class="form-group form-focus">
+												<input type="email" class="form-control floating" formControlName="email"
+												[ngClass]="{ 'is-invalid': submitted && forgotPwdFormControls.email.errors }" />
+												<div *ngIf="submitted" class="invalid-feedback">
+													<div *ngIf="forgotPwdFormControls.email.errors.required">Email est obligatoire</div>
+													<div *ngIf=" forgotPwdFormControls.email.errors.email">Entrer un adresse Email correcte !</div>
+												</div>
+												<div style="color: red;" *ngIf="submitted && !forgotPwdFormControls.email.errors && emailCorrectError">Cette adresse Email et introuvable !</div>
+												<label class="focus-label">Email</label>
+											</div>
+											<div class="text-right">
+												<a class="forgot-link" routerLink="/login">Annuler ?</a>
+											</div>
+											<button class="btn btn-primary btn-block btn-lg login-btn" (click)="submitted=true" type="submit">Continuer</button>
+										</form>
+										<!-- /Forgot Password Form -->
+										
+									</div>
+
+									<div class="col-md-12 col-lg-6 login-right" *ngIf="emailCorrect">
+										<div class="login-header">
+											<h3>Mot de passe oublié?</h3>
+											<p class="small text-muted">Veuiller cliquer sur le lien envoyé a votre boite mail</p>
+											<h3>NB:</h3>
+											<p class="small text-muted">L'email est valable pendant 1h de temps maximum</p>
+										</div>
+										
+									</div>
+								
+								</div>
+							</div>
+							<!-- /Account Content -->
+							
+						</div>
+					</div>
+
+				</div>
+
+</div>
+
+<app-reset-password *ngIf="emailCorrect" [idUser]="idUser"></app-reset-password>

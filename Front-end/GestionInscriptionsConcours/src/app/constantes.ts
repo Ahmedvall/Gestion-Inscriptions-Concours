@@ -1,0 +1,1 @@
+export const apiRest = "http://localhost:9999";

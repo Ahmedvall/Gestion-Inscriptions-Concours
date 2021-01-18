@@ -1,0 +1,58 @@
+<form [formGroup]="notesForm" (ngSubmit)="SauvegardeTestEcrit()">
+    <h1 style="text-align:  center;" mat-dialog-title>Saisie de la note</h1>
+<mat-dialog-content class="mat-typography">
+    <h2 *ngIf="data.mExist"> {{data.matiere.nom}} <small class="text-muted">Nombre de questions = {{data.matiere.nbQuestion}}</small> </h2>
+  <hr>
+  
+  <div class="row" *ngIf="data.mExist">
+        <div class="form-group col-md-4">
+            <label for="inputEmail4">Nombre Faux : </label>
+            <input type="number" class="form-control" formControlName="nbFaux"            
+            [ngClass]="{ 'is-invalid': submitted && notesFormControls.nbFaux.errors }"> 
+            <div *ngIf="submitted && notesFormControls.nbFaux.errors" class="invalid-feedback">
+                <div *ngIf="notesFormControls.nbFaux.errors.required">champ obligatoire</div>
+            </div> 
+        </div>
+        <div class="form-group col-md-4">
+            <label for="inputEmail4">Nombre Vrai : </label>
+            <input type="number" class="form-control" formControlName="nbVrai"           
+            [ngClass]="{ 'is-invalid': submitted && notesFormControls.nbVrai.errors }"> 
+            <div *ngIf="submitted && notesFormControls.nbVrai.errors" class="invalid-feedback">
+                <div *ngIf="notesFormControls.nbVrai.errors.required">champ obligatoire</div>
+            </div>  
+        </div>
+        <div class="form-group col-md-4">
+            <label for="inputEmail4">Sans Reponse : </label>
+            <input [disabled]="true" [value]="getNbSansReponse()" type="number" class="form-control"> 
+        </div>
+  </div>
+  <div class="row container" *ngIf="nbSansReponseError">
+    <h4 style="color: red;">ATT: <small> La somme des questions répondues ne doit pas dépasser le nombre total des questions ({{this.data.matiere.nbQuestion}}) </small>  </h4>
+  </div>
+  <div class="row" *ngIf="!data.mExist">
+    <h3>Veuiller choisir une matiere a saisire</h3>
+  </div>
+
+  
+</mat-dialog-content>
+<mat-dialog-actions align="end">  
+  <button class="btn btn-primmary" mat-button mat-dialog-close>Fermer</button>
+  <button *ngIf="!testEcritExist" type="submit" style="margin-left: 10px;" (click)="submitted = true;" class="btn btn-success">Enregistrer</button>
+  <button *ngIf="testEcritExist" type="submit" style="margin-left: 10px;" (click)="submitted = true;" class="btn btn-success">Modifier</button>
+</mat-dialog-actions>
+</form>
+
+
+
+<!-- <mat-dialog-content class="mat-typography">
+    
+    <app-ecrit [candidat]="data.candidat"></app-ecrit>
+  
+</mat-dialog-content>
+<mat-dialog-actions align="end">  
+  <button class="btn btn-primmary" mat-button mat-dialog-close>Fermer</button>
+  <button *ngIf="!testEcritExist" type="submit" style="margin-left: 10px;" (click)="submitted = true;" class="btn btn-success">Enregistrer</button>
+  <button *ngIf="testEcritExist" type="submit" style="margin-left: 10px;" (click)="submitted = true;" class="btn btn-success">Modifier</button>
+</mat-dialog-actions> -->
+
+

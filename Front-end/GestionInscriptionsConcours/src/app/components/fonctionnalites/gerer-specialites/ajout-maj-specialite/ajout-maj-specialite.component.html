@@ -1,0 +1,29 @@
+<div class="container">
+    <form [formGroup]="specialiteForm" (ngSubmit)="enregistereSpecialite()">
+        <div class="form-row">
+            <div class="form-group col-md-3">
+              <label for="inputEmail4">Nom Spécialité: </label>
+              <input type="text" class="form-control"  formControlName="libelle"
+              [ngClass]="{ 'is-invalid': submitted && specialiteFormControls.libelle.errors }"> 
+                          <div *ngIf="submitted && specialiteFormControls.libelle.errors" class="invalid-feedback">
+                              <div *ngIf="specialiteFormControls.libelle.errors.required">champ obligatoire</div>
+                          </div>
+            </div>
+            
+
+            <div class="form-group col-md-2">
+                <label for="inputEmail4" >&nbsp;&nbsp;</label>
+                <button *ngIf="!specialiteEdited" (click)="submitted = true;" type="submit" class="btn btn-primary form-control">Ajouter</button>
+                <table *ngIf="specialiteEdited">
+                    <tr>
+                        <td><button (click)="annuler = true;" type="submit" class="btn btn-primary float-left">Annuler</button></td>
+                        <td>&nbsp;&nbsp;</td>
+                        <td><button (click)="submitted = true;" type="submit" class="btn btn-primary float-right">Modifier</button></td>
+                    </tr>     
+                </table>
+                
+            </div>
+            
+          </div>
+    </form> 
+</div>

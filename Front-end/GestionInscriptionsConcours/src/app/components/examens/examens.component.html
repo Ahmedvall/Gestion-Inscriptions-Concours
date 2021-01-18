@@ -1,0 +1,55 @@
+<app-header></app-header>
+<br>
+
+<!-- <form [formGroup]="cinForm" (ngSubmit)="onSubmitCIN()">
+    <div class="row" style="width: 90%;">
+        <div class="col-md-3">
+            <input type="text" class="form-control" formControlName="cin" placeholder="Entre le cin du candidat"
+            [ngClass]="{ 'is-invalid': submitted && cinFormControls.cin.errors }"> 
+            <div *ngIf="submitted && cinFormControls.cin.errors" class="invalid-feedback">
+                <div *ngIf="cinFormControls.cin.errors.required">champ obligatoire</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <button type="submit" (click)="submitted = true;" class="btn btn-secondary">Suivant</button>
+        </div>
+    </div>
+</form> -->
+
+<div class="container" *ngIf="!oralTestSelected">
+    <div class="row">
+        <div class="col-md-6">
+            <select (ngModelChange)="getEvaluationSelected($event)" [(ngModel)]="evaluationSelectedValue" class="form-control form-control-lg">
+                <option selected value="-1"> Choisir l'Evaluation..*</option>
+                <option value="1">Evaluation Ecrite</option>
+                <option value="2">Evaluation Orale</option>
+              </select>
+        </div>
+        <div class="col-md-4" *ngIf="evaluationSelectedValue != -1 && ecritEvaluationSelected">
+            <select (ngModelChange)="getMatiereSelected($event)" 
+             [(ngModel)]="matiereSelectedValue" class="form-control">
+                <option selected value="-1"> Choisir la matiere..*</option>
+                <option *ngFor="let matiere of matieres" [value]="matiere.idMatiere"> {{matiere.nom}}</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+<br><br>
+
+<app-list-candidats *ngIf="evaluationSelectedValue != -1"
+    (oralTestEventSelected)="oralTestEventFct($event)"
+    [matiere]="matiere"
+    [ecritEvaluationSelected]="ecritEvaluationSelected"></app-list-candidats>
+
+<!-- <div style="margin-left: 20px;">
+    <div class="row" style="width: 100%;" *ngIf="candidatExist">
+        <div class="col-md-4" >
+            <app-ecrit [candidat]="candidat"></app-ecrit>
+        </div>
+    
+        <div class="col-md-7" style="margin-left: 20px;">
+            <app-oral [candidat]="candidat"></app-oral>
+        </div>
+    </div>
+</div> -->

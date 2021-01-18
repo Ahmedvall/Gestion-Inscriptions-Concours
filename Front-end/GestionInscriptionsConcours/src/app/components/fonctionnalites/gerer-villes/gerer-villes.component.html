@@ -1,0 +1,35 @@
+<app-header></app-header>
+
+<div class="container" style="margin-top: 20px;">
+    <h4>Gerer les Villes</h4>
+</div>
+
+<app-ajout-maj-ville
+    (annulerEffectuer) = "annulerEffEvent($event)"
+    (ajoutEffectuer) = "ajoutEffEvent($event)"
+    [ville] = "ville"
+    [villeEdited] = "villeEdited"></app-ajout-maj-ville>
+
+<div class="container">
+    <table class="table" *ngIf="villes.length > 0">
+        <thead>
+          <tr>
+            <th style="width: 40%;" >Nom</th>
+            <th style="width: 5%;" >Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let ville of villes; let i = index">
+            <td style="width: 40%;">{{ville.nom}}</td>
+            <td style="width: 5%;">
+              <a class="float-left" (click)="editerVille(ville)"><i title="Editer" style="cursor: pointer;" class="fas fa-edit"></i></a>  
+              <a class="float-right" (click)="supprimerVille(ville)"> <i title="Supprimer" style="cursor: pointer;" class="fas fa-trash"></i></a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="container" *ngIf="villes.length == 0">
+          <h5 style="text-align: center;">Pas de ville enregisterer</h5>
+      </div>
+</div>

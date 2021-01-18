@@ -1,0 +1,40 @@
+<app-header></app-header>
+
+<div class="container" style = "margin-top: 20px;">
+  <h4>Gérer les Matieres</h4>
+</div>
+<br>
+
+<app-ajout-maj-matiere
+    (ajoutEffectuer) = "ajoutEffrctuerEvent($event)"
+    (majEffectuer) = "majEffrctuerEvent($event)"
+    (annulerEffectuer) = "annulerEffEvent($event)"
+    [matiere] = "matiere"
+    [matiereEdited] = "matiereEdited"></app-ajout-maj-matiere>
+
+
+<div class="container">
+    <table class="table" *ngIf="matieres.length > 0">
+        <thead>
+          <tr>
+            <th scope="col">Nom</th>
+            <th scope="col">Nombre de Question</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody> 
+          <tr *ngFor="let m of matieres; let i = index">
+            <th scope="row">{{m.nom}}</th>
+            <th scope="row">{{m.nbQuestion}}</th>
+            <td>
+              <a class="float-left" (click)="editerMatiere(m)"><i title="Editer" style="cursor: pointer;" class="fas fa-edit"></i></a>  
+              <a class="float-right" (click)="supprimerMatiere(m)"> <i title="Supprimer" style="cursor: pointer;" class="fas fa-trash"></i></a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="container" *ngIf="matieres.length == 0">
+          <h5 style="text-align: center;">Pas de Matieres enregisterer</h5>
+      </div>
+</div>

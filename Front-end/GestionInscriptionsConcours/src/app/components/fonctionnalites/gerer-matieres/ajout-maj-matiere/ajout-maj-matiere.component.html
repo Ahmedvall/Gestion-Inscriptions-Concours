@@ -1,0 +1,39 @@
+<div class="container">
+    <form [formGroup]="matiereForm" (ngSubmit)="enregistereMatiere()">
+        <div class="form-row">
+            
+    
+            <div class="form-group col-md-3">
+                <label for="inputEmail4">Nom :</label>
+                <input type="text" class="form-control" formControlName="nom"
+                [ngClass]="{ 'is-invalid': submitted && matiereFormControls.nom.errors }"> 
+                            <div *ngIf="submitted && matiereFormControls.nom.errors" class="invalid-feedback">
+                                <div *ngIf="matiereFormControls.nom.errors.required">champ obligatoire</div>
+                            </div>
+            </div>
+
+            <div class="form-group col-md-3">
+                <label for="inputEmail4">Nombre de Questions :</label>
+                <input type="text" class="form-control" formControlName="nbQuestion"
+                [ngClass]="{ 'is-invalid': submitted && matiereFormControls.nbQuestion.errors }"> 
+                            <div *ngIf="submitted && matiereFormControls.nbQuestion.errors" class="invalid-feedback">
+                                <div *ngIf="matiereFormControls.nbQuestion.errors.required">champ obligatoire</div>
+                            </div>
+            </div>
+
+            <div class="form-group col-md-2">
+                <label for="inputEmail4" >&nbsp;&nbsp;</label>
+                <button *ngIf="!matiereEdited" (click)="submitted = true;" type="submit" class="btn btn-primary form-control">Ajouter</button>
+                <table *ngIf="matiereEdited">
+                    <tr>
+                        <td><button (click)="annuler = true;" type="submit" class="btn btn-primary float-left">Annuler</button></td>
+                        <td>&nbsp;&nbsp;</td>
+                        <td><button (click)="submitted = true;" type="submit" class="btn btn-primary float-right">Modifier</button></td>
+                    </tr>     
+                </table>
+                
+            </div>
+            
+          </div>
+    </form> 
+</div>

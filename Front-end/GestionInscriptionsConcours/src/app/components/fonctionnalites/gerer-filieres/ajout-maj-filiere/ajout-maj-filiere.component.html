@@ -1,0 +1,45 @@
+<div class="container">
+    <form [formGroup]="filiereForm" (ngSubmit)="enregistereFiliere()">
+        <div class="form-row">
+            <div class="form-group col-md-3">
+              <label for="inputEmail4">Nom filière: </label>
+              <input type="text" class="form-control"  formControlName="nom"
+              [ngClass]="{ 'is-invalid': submitted && filiereFormControls.nom.errors }"> 
+                          <div *ngIf="submitted && filiereFormControls.nom.errors" class="invalid-feedback">
+                              <div *ngIf="filiereFormControls.nom.errors.required">champ obligatoire</div>
+                          </div>
+            </div>
+            <div class="form-group col-md-3">
+              <label for="inputEmail4">Date : </label>
+              <input type="date" class="form-control" formControlName="date"
+              [ngClass]="{ 'is-invalid': submitted && filiereFormControls.date.errors }"> 
+                          <div *ngIf="submitted && filiereFormControls.date.errors" class="invalid-feedback">
+                              <div *ngIf="filiereFormControls.date.errors.required">champ obligatoire</div>
+                          </div>
+            </div>
+    
+            <div class="form-group col-md-3">
+                <label for="inputEmail4">Description :</label>
+                <input type="text" class="form-control" formControlName="description"
+                [ngClass]="{ 'is-invalid': submitted && filiereFormControls.description.errors }"> 
+                            <div *ngIf="submitted && filiereFormControls.description.errors" class="invalid-feedback">
+                                <div *ngIf="filiereFormControls.description.errors.required">champ obligatoire</div>
+                            </div>
+            </div>
+
+            <div class="form-group col-md-2">
+                <label for="inputEmail4" >&nbsp;&nbsp;</label>
+                <button *ngIf="!filiereEdited" (click)="submitted = true;" type="submit" class="btn btn-primary form-control">Ajouter</button>
+                <table *ngIf="filiereEdited">
+                    <tr>
+                        <td><button (click)="annuler = true;" type="submit" class="btn btn-primary float-left">Annuler</button></td>
+                        <td>&nbsp;&nbsp;</td>
+                        <td><button (click)="submitted = true;" type="submit" class="btn btn-primary float-right">Modifier</button></td>
+                    </tr>     
+                </table>
+                
+            </div>
+            
+          </div>
+    </form> 
+</div>

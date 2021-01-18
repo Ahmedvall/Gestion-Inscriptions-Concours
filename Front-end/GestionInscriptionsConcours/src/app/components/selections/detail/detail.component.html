@@ -1,0 +1,95 @@
+<h1 style="text-align:  center;" mat-dialog-title>Détails</h1>
+<mat-dialog-content class="mat-typography">
+  <h2>Informations Personnel</h2>
+  <hr>
+  <table class="table">
+    <tbody>
+      <tr>
+        <td><strong >Nom :  </strong> {{data.nom}} </td>
+        <td><strong >Prenom :  </strong> {{data.prenom}} </td>
+        <td><strong >N° Tel :  </strong> {{data.numTel}} </td>
+      </tr>
+      <tr>
+        <td><strong >Date Naissance : </strong> {{data.dateNaissance | date: 'dd/MM/yyyy'}} </td>
+        <td><strong >Email :  </strong> {{data.mail}} </td>
+        <td><strong >CIN :  </strong> {{data.cin}} </td>
+      </tr>
+      <tr>
+        <td><strong >CNE :  </strong> {{data.cne}} </td>
+      </tr>
+      <!-- <tr>
+        <th class="pl-0 w-0"><strong>Delivery</strong></th>
+        <td>USA, Europe</td>
+      </tr> -->
+    </tbody>
+  </table>
+  
+  <br><br>
+  <h2>Diplomes :</h2>
+  <hr>
+
+  <table class="table table-striped">
+    <thead>
+      <th>Diplomes</th>
+      <th>Spécialites</th>
+      <th>Mention</th>
+      <th>Date Obtention</th>
+      <th>Etablissement</th>
+      <th>Villes</th>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let obtenue of data.obtenues">
+        <td> {{obtenue.diplome_specialite.diplome.type | uppercase}} </td>
+        <td> {{obtenue.diplome_specialite.specialite.nom}} </td>
+        <td> {{obtenue.mention}}</td>
+        <td> {{obtenue.dateObtention | date: 'dd/MM/yyyy'}}</td>
+        <td> {{obtenue.etablissement.nom}} </td>
+        <td> {{obtenue.etablissement.ville.nom}}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <br><br>
+
+  <table class="table table-sm table-borderless mb-0">
+    <thead>
+      <th>Diplomes</th>
+      <th>Année scolaire</th>
+      <th>Semester 1</th>
+      <th>Semester 2</th>
+      <th>Moyenne</th>
+    </thead>
+
+    <tbody *ngFor="let obtenue of data.obtenues">
+      <tr *ngFor="let annee of obtenue.anneesEtudes">
+        <td> {{obtenue.diplome_specialite.diplome.type | uppercase}} </td>
+        <td> {{annee.anneeScolaire}} </td>
+        <td> {{annee.noteSemester1}}</td>
+        <td> {{annee.noteSemester2}}</td>
+        <td> {{annee.moyGeneral}} </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <br><br>
+
+  <table class="table table-sm table-borderless mb-0">
+    <thead>
+      <th>Filieres</th>
+      <th>Priorités</th>
+    </thead>
+
+    <tbody >
+      <tr *ngFor="let postuler of data.listpost">
+        <td> {{postuler.filiere.nom}} </td>
+        <td> {{postuler.priorite}} </td>
+      </tr>
+    </tbody>
+  </table>
+
+  
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button class="btn btn-success" mat-button mat-dialog-close>Fermer</button>
+</mat-dialog-actions>
